@@ -13,7 +13,7 @@ export function Button({ title, ...rest }: ButtonProps) {
             style={styles.container}
             {...rest}
         >
-            <Text style={styles.text}>Confirmar</Text>
+            <Text style={styles.text}>{title}</Text>
         </TouchableOpacity>
     )
 }

@@ -9,9 +9,11 @@ import {
     Platform,
     TouchableWithoutFeedback,
     Keyboard,
+    Alert,
 } from 'react-native';
 import { Entypo } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { Button } from '../components/Button'
 
@@ -39,7 +41,21 @@ export function UserIdentification() {
     }
 
     function handleSubmit() {
-        navigation.navigate('Confirmation')
+        if (!name) {
+            return Alert.alert("Me diz como chamar você? 😥")
+        }
+        try {
+            AsyncStorage.setItem('@plantmanager:user', name)
+            navigation.navigate('Confirmation', {
+                title: 'Prontinho',
+                subtitle: 'Agora vamos começar a cuidar das suas plantinhas com muito cuidado.',
+                buttonTitle: 'Começar',
+                icon: 'smile',
+                nextScreen: 'PlantSelect'
+            })
+        } catch {
+            return Alert.alert("Não foi possivel salvar seu Nome. 😥")
+        }
     }
 
     return (
@@ -52,10 +68,7 @@ export function UserIdentification() {
                     <View style={styles.content}>
                         <View style={styles.form}>
                             <View style={styles.header}>
-                                <Entypo
-                                    name={isFilled ? 'emoji-flirt' : 'emoji-happy'}
-                                    size={60} color="#b3b300"
-                                />
+                                <Text style={styles.emoji}>{isFilled ? '😃' : '🙂'}</Text>
                                 <Text style={styles.title}>Como podemos {'\n'}chamar você?</Text>
                             </View>
                             <TextInput

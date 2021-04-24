@@ -37,7 +37,7 @@ export function Welcome() {
                     activeOpacity={0.7}>
                     <Feather
                         name='chevron-right'
-                        tyle={styles.buttonIcon}
+                        style={styles.buttonIcon}
                     />
                 </TouchableOpacity>
             </View>

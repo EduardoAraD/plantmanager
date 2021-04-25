@@ -9,7 +9,7 @@ import { Load } from '../components/Load';
 import fonts from '../styles/fonts';
 import { EnviromentButton } from '../components/EnviromentButton';
 import api from '../services/api';
-import { PlantCardPrimary } from '../components/plantCardPrimary';
+import { PlantCardPrimary } from '../components/PlantCardPrimary'
 import { PlantProps } from '../libs/storage';
 
 interface EnviromentProps {

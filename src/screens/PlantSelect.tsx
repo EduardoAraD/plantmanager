@@ -8,7 +8,8 @@ import { Header } from '../components/Header'
 import { Load } from '../components/Load';
 import fonts from '../styles/fonts';
 import { EnviromentButton } from '../components/EnviromentButton';
-import api from '../services/api';
+// import api from '../services/api';
+import server from '../services/server.json';
 import { PlantCardPrimary } from '../components/PlantCardPrimary'
 import { PlantProps } from '../libs/storage';
 
@@ -29,8 +30,15 @@ export function PlantSelect() {
     const [loadingMore, setLoadingMore] = useState(false);
 
     async function fecthPlants() {
-        const { data } = await api.get(`plants?_sort=name&_order=asc&_page=${page}&_limit=8`);
-
+        // const { data } = await api.get(`plants?_sort=name&_order=asc&_page=${page}&_limit=8`);
+        const data: PlantProps[] = server.plants.map(item => {
+            return {
+                ...item,
+                id: String(item.id),
+                dateTimeNotification: new Date(),
+                hour: ''
+            }
+        });
         if (!data)
             return setLoading(true);
 
@@ -70,7 +78,8 @@ export function PlantSelect() {
 
     useEffect(() => {
         async function fecthEnvirollment() {
-            const { data } = await api.get('plants_environments?_sort=title&order=asc');
+            // const { data } = await api.get('plants_environments?_sort=title&order=asc');
+            const data = server.plants_environments;
             setEnvirollments([{
                 key: 'all',
                 title: 'Todos'
@@ -121,13 +130,13 @@ export function PlantSelect() {
                     )}
                     showsVerticalScrollIndicator={false}
                     numColumns={2}
-                    onEndReachedThreshold={0.2}
-                    onEndReached={({ distanceFromEnd }) => handleFeacthMore(distanceFromEnd)}
-                    ListFooterComponent={
-                        loadingMore ?
-                            <ActivityIndicator color={colors.green} />
-                            : <></>
-                    }
+                // onEndReachedThreshold={0.2}
+                // onEndReached={({ distanceFromEnd }) => handleFeacthMore(distanceFromEnd)}
+                // ListFooterComponent={
+                //     loadingMore ?
+                //         <ActivityIndicator color={colors.green} />
+                //         : <></>
+                // }
                 />
             </View>
         </View>
